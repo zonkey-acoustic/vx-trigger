@@ -4,7 +4,7 @@ A lightweight Windows system tray application that monitors ProTee United shot d
 
 ## How It Works
 
-ProTee United writes a timestamped subdirectory to `%APPDATA%\ProTeeUnited\Shots` for each shot. ShotTrigger watches that directory using a `FileSystemWatcher` and fires a configured trigger the moment a new shot folder appears — no network packet capture, no admin privileges required.
+ProTee United writes a timestamped subdirectory to `%APPDATA%\ProTeeUnited\Shots` for each shot. ShotTrigger watches that directory using a `FileSystemWatcher` and fires a configured trigger the moment a new shot folder appears.
 
 ## Trigger Types
 
@@ -15,7 +15,7 @@ ProTee United writes a timestamped subdirectory to `%APPDATA%\ProTeeUnited\Shots
 ## Requirements
 
 - Windows 10/11
-- [ProTee United](https://www.proteegolf.com/) launch monitor software
+- [ProTee Labs](https://www.proteegolf.com/) launch monitor software
 
 ## Installation
 

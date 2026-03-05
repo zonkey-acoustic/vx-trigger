@@ -28,4 +28,16 @@
     <PackageReference Include="NAudio" Version="2.2.1" />
   </ItemGroup>
 
+  <!-- Use custom Program.Main instead of auto-generated entry point -->
+  <PropertyGroup>
+    <StartupObject>ShotTrigger.Program</StartupObject>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+    </ApplicationDefinition>
+  </ItemGroup>
+
 </Project>
