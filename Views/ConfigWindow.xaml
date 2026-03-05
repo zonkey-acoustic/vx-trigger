@@ -1,0 +1,263 @@
+<Window x:Class="ShotTrigger.Views.ConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Shot Trigger Configuration"
+        Height="750" Width="500"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="Height"
+        MinHeight="400" MaxHeight="900"
+        Style="{StaticResource MaterialDesignWindow}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="Shot Trigger Configuration"
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                   Margin="0,0,0,16"/>
+
+        <!-- Shots Directory -->
+        <GroupBox Grid.Row="1"
+                  Header="Shots Directory"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  Margin="0,0,0,16">
+            <StackPanel Margin="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="ShotsDirectoryTextBox"
+                             Grid.Column="0"
+                             materialDesign:HintAssist.Hint="Path to ProTee Shots folder"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Margin="0,0,8,0"/>
+                    <Button x:Name="BrowseButton"
+                            Grid.Column="1"
+                            Content="Browse"
+                            Click="BrowseButton_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </Grid>
+                <TextBlock Text="Monitors this directory for new shot folders from ProTee United."
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Opacity="0.7"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Trigger Type Selection -->
+        <GroupBox Grid.Row="2"
+                  Header="Trigger Type"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  Margin="0,0,0,16">
+            <StackPanel Margin="8">
+                <RadioButton x:Name="AudioRadio"
+                             Content="Audio Trigger"
+                             Style="{StaticResource MaterialDesignRadioButton}"
+                             IsChecked="True"
+                             Checked="TriggerType_Changed"
+                             Margin="0,0,0,8"/>
+                <RadioButton x:Name="NetworkRadio"
+                             Content="Network Trigger (UDP)"
+                             Style="{StaticResource MaterialDesignRadioButton}"
+                             Checked="TriggerType_Changed"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Audio Configuration -->
+        <GroupBox x:Name="AudioConfigGroup"
+                  Grid.Row="3"
+                  Header="Audio Settings"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  Margin="0,0,0,16">
+            <StackPanel Margin="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="AudioDeviceCombo"
+                              Grid.Column="0"
+                              materialDesign:HintAssist.Hint="Select Audio Device"
+                              Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                              DisplayMemberPath="Name"
+                              Margin="0,0,8,0"/>
+                    <Button x:Name="TestAudioButton"
+                            Grid.Column="1"
+                            Content="Test"
+                            Click="TestAudioButton_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </Grid>
+
+                <!-- Advanced Audio Settings -->
+                <Expander Header="Advanced Tone Settings" Margin="0,12,0,0">
+                    <StackPanel Margin="12,12,12,8">
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Frequency" VerticalAlignment="Center"/>
+                            <Slider x:Name="FrequencySlider" Grid.Column="1"
+                                    Minimum="500" Maximum="8000"
+                                    TickFrequency="100" IsSnapToTickEnabled="True"
+                                    ValueChanged="ToneSlider_ValueChanged"/>
+                            <TextBlock x:Name="FrequencyValue" Grid.Column="2"
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Noise Decay" VerticalAlignment="Center"/>
+                            <Slider x:Name="NoiseDecaySlider" Grid.Column="1"
+                                    Minimum="10" Maximum="100"
+                                    TickFrequency="5" IsSnapToTickEnabled="True"
+                                    ValueChanged="ToneSlider_ValueChanged"/>
+                            <TextBlock x:Name="NoiseDecayValue" Grid.Column="2"
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tone Decay" VerticalAlignment="Center"/>
+                            <Slider x:Name="ToneDecaySlider" Grid.Column="1"
+                                    Minimum="5" Maximum="500"
+                                    TickFrequency="5" IsSnapToTickEnabled="True"
+                                    ValueChanged="ToneSlider_ValueChanged"/>
+                            <TextBlock x:Name="ToneDecayValue" Grid.Column="2"
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tone Mix" VerticalAlignment="Center"/>
+                            <Slider x:Name="ToneMixSlider" Grid.Column="1"
+                                    Minimum="0" Maximum="1"
+                                    TickFrequency="0.05" IsSnapToTickEnabled="True"
+                                    ValueChanged="ToneSlider_ValueChanged"/>
+                            <TextBlock x:Name="ToneMixValue" Grid.Column="2"
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="70"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Duration" VerticalAlignment="Center"/>
+                            <Slider x:Name="DurationSlider" Grid.Column="1"
+                                    Minimum="100" Maximum="1000"
+                                    TickFrequency="50" IsSnapToTickEnabled="True"
+                                    ValueChanged="ToneSlider_ValueChanged"/>
+                            <TextBlock x:Name="DurationValue" Grid.Column="2"
+                                       VerticalAlignment="Center" TextAlignment="Right"/>
+                        </Grid>
+                    </StackPanel>
+                </Expander>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Network Configuration -->
+        <GroupBox x:Name="NetworkConfigGroup"
+                  Grid.Row="3"
+                  Header="Network Settings"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  Visibility="Collapsed"
+                  Margin="0,0,0,16">
+            <Grid Margin="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="NetworkHostTextBox"
+                         Grid.Row="0" Grid.Column="0"
+                         materialDesign:HintAssist.Hint="Host (e.g., 127.0.0.1)"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Margin="0,0,8,8"/>
+
+                <TextBox x:Name="NetworkPortTextBox"
+                         Grid.Row="1" Grid.Column="0"
+                         materialDesign:HintAssist.Hint="UDP Port (1-65535)"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         PreviewTextInput="PortTextBox_PreviewTextInput"
+                         Margin="0,0,8,0"/>
+
+                <Button x:Name="TestNetworkButton"
+                        Grid.Row="1" Grid.Column="1"
+                        Content="Test"
+                        Click="TestNetworkButton_Click"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        VerticalAlignment="Bottom"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- Status -->
+        <GroupBox Grid.Row="4"
+                  Header="Status"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  Margin="0,0,0,16">
+            <StackPanel Margin="8">
+                <TextBlock x:Name="StatusText"
+                           Text="Not monitoring"
+                           Style="{StaticResource MaterialDesignBody2TextBlock}"/>
+                <TextBlock x:Name="ShotCountText"
+                           Text=""
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Opacity="0.7"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Info -->
+        <TextBlock Grid.Row="5"
+                   TextWrapping="Wrap"
+                   Opacity="0.7"
+                   VerticalAlignment="Top"
+                   Margin="0,0,0,16">
+            <Run Text="Monitors the ProTee Shots directory and fires triggers when new shots are detected. The app runs in the system tray." FontStyle="Italic"/>
+        </TextBlock>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Row="6"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Save"
+                    Click="SaveButton_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Margin="0,0,8,0"/>
+            <Button Content="Close"
+                    Click="CloseButton_Click"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>
