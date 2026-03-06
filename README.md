@@ -17,6 +17,17 @@ Download and install: [VB-CABLE](https://vb-audio.com/Cable/index.htm)
 
 **Network Trigger (UDP)** — Sends a UDP packet to a configured host and port. Compatible with [Kinovea 2025.1](https://www.kinovea.org/) and any other recording software that supports UDP trigger input.
 
+**Swing Video Capture** — For users recording with ProTee Labs' built-in high-speed swing cameras instead of external recording software. ProTee writes `.mp4` files to `%APPDATA%\ProTeeUnited\SwingVideos` with random filenames, overwriting them after each shot. This trigger copies the videos to a user-defined destination folder, organized by date with sequential shot numbering:
+
+```
+Destination/
+  2026-03-06/
+    Shot_001_1.mp4
+    Shot_001_2.mp4
+    Shot_002_1.mp4
+    Shot_002_2.mp4
+```
+
 ## Requirements
 
 - Windows 10/11
@@ -67,6 +78,7 @@ VXTrigger/
 │   ├── TriggerOrchestrator.cs    # Wires detection → triggers with debounce
 │   ├── AudioTriggerService.cs    # Golf impact sound via NAudio
 │   ├── NetworkTriggerService.cs  # UDP trigger packet sender
+│   ├── SwingVideoService.cs      # Copies ProTee swing videos to organized folders
 │   └── TriggerSettings.cs        # Settings model + JSON persistence
 └── Views/
     ├── ConfigWindow.xaml         # Configuration UI

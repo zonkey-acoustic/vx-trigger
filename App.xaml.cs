@@ -30,7 +30,7 @@ public partial class App : Application
         SetupTrayIcon();
 
         // Auto-start monitoring if a trigger is enabled
-        if (_orchestrator.Settings.AudioTriggerEnabled || _orchestrator.Settings.NetworkTriggerEnabled)
+        if (_orchestrator.Settings.AudioTriggerEnabled || _orchestrator.Settings.NetworkTriggerEnabled || _orchestrator.Settings.SwingVideoEnabled)
         {
             _orchestrator.Start();
             UpdateTrayState();
@@ -114,7 +114,7 @@ public partial class App : Application
         }
         else
         {
-            var hasConfig = _orchestrator.Settings.AudioTriggerEnabled || _orchestrator.Settings.NetworkTriggerEnabled;
+            var hasConfig = _orchestrator.Settings.AudioTriggerEnabled || _orchestrator.Settings.NetworkTriggerEnabled || _orchestrator.Settings.SwingVideoEnabled;
             SetTrayIcon(hasConfig ? Color.Yellow : Color.Gray);
             _toggleItem.Text = "Start Monitoring";
             _trayIcon.Text = "VX Trigger - Stopped";

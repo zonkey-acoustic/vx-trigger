@@ -5,6 +5,7 @@ public class TriggerOrchestrator : IDisposable
     private ShotFolderWatcher? _watcher;
     private readonly AudioTriggerService _audioTrigger;
     private readonly NetworkTriggerService _networkTrigger;
+    private readonly SwingVideoService _swingVideo;
     private TriggerSettings _settings;
     private bool _disposed;
 
@@ -18,6 +19,7 @@ public class TriggerOrchestrator : IDisposable
     public TriggerSettings Settings => _settings;
     public AudioTriggerService AudioTrigger => _audioTrigger;
     public NetworkTriggerService NetworkTrigger => _networkTrigger;
+    public SwingVideoService SwingVideo => _swingVideo;
     public bool IsRunning => _watcher?.IsRunning ?? false;
     public int ShotCount { get; private set; }
     public DateTime? LastShotTime { get; private set; }
@@ -27,6 +29,7 @@ public class TriggerOrchestrator : IDisposable
         _settings = TriggerSettings.Load();
         _audioTrigger = new AudioTriggerService();
         _networkTrigger = new NetworkTriggerService();
+        _swingVideo = new SwingVideoService();
 
         ApplySettings();
     }
@@ -45,6 +48,10 @@ public class TriggerOrchestrator : IDisposable
         _networkTrigger.IsEnabled = _settings.NetworkTriggerEnabled;
         _networkTrigger.Port = _settings.NetworkTriggerPort;
         _networkTrigger.TargetHost = _settings.NetworkTriggerHost;
+
+        _swingVideo.IsEnabled = _settings.SwingVideoEnabled;
+        _swingVideo.SourcePath = _settings.SwingVideoSourcePath;
+        _swingVideo.DestinationPath = _settings.SwingVideoDestinationPath;
     }
 
     public void Start()
@@ -96,6 +103,7 @@ public class TriggerOrchestrator : IDisposable
 
         _audioTrigger.PlayTriggerTone();
         _networkTrigger.SendTriggerPacket();
+        _swingVideo.OnShotDetected();
 
         ShotFired?.Invoke(this, EventArgs.Empty);
     }
@@ -108,6 +116,7 @@ public class TriggerOrchestrator : IDisposable
         Stop();
         _audioTrigger.Dispose();
         _networkTrigger.Dispose();
+        _swingVideo.Dispose();
         _disposed = true;
     }
 }

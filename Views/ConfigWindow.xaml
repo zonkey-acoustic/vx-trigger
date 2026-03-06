@@ -75,6 +75,11 @@
                 <RadioButton x:Name="NetworkRadio"
                              Content="Network Trigger (UDP)"
                              Style="{StaticResource MaterialDesignRadioButton}"
+                             Checked="TriggerType_Changed"
+                             Margin="0,0,0,8"/>
+                <RadioButton x:Name="SwingVideoRadio"
+                             Content="Swing Video Capture"
+                             Style="{StaticResource MaterialDesignRadioButton}"
                              Checked="TriggerType_Changed"/>
             </StackPanel>
         </GroupBox>
@@ -219,6 +224,62 @@
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         VerticalAlignment="Bottom"/>
             </Grid>
+        </GroupBox>
+
+        <!-- Swing Video Configuration -->
+        <GroupBox x:Name="SwingVideoConfigGroup"
+                  Grid.Row="3"
+                  Header="Swing Video Settings"
+                  Style="{StaticResource MaterialDesignCardGroupBox}"
+                  Visibility="Collapsed"
+                  Margin="0,0,0,16">
+            <StackPanel Margin="8">
+                <TextBlock Text="Source (ProTee SwingVideos folder)"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Opacity="0.7"
+                           Margin="0,0,0,4"/>
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SwingVideoSourceTextBox"
+                             Grid.Column="0"
+                             materialDesign:HintAssist.Hint="SwingVideos folder path"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Margin="0,0,8,0"/>
+                    <Button x:Name="BrowseSwingSourceButton"
+                            Grid.Column="1"
+                            Content="Browse"
+                            Click="BrowseSwingSourceButton_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </Grid>
+                <TextBlock Text="Destination (where to save copies)"
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Opacity="0.7"
+                           Margin="0,0,0,4"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SwingVideoDestTextBox"
+                             Grid.Column="0"
+                             materialDesign:HintAssist.Hint="Destination folder path"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                             Margin="0,0,8,0"/>
+                    <Button x:Name="BrowseSwingDestButton"
+                            Grid.Column="1"
+                            Content="Browse"
+                            Click="BrowseSwingDestButton_Click"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </Grid>
+                <TextBlock Text="Copies swing videos to a subfolder per day (e.g. 2026-03-06/Shot_001_1.mp4)."
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           Opacity="0.7"
+                           TextWrapping="Wrap"
+                           Margin="0,8,0,0"/>
+            </StackPanel>
         </GroupBox>
 
         <!-- Status -->

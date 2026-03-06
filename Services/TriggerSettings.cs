@@ -27,6 +27,13 @@ public class TriggerSettings
     public int NetworkTriggerPort { get; set; } = 8875;
     public string NetworkTriggerHost { get; set; } = "127.0.0.1";
 
+    // Swing video capture
+    public bool SwingVideoEnabled { get; set; }
+    public string SwingVideoSourcePath { get; set; } = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "ProTeeUnited", "SwingVideos");
+    public string SwingVideoDestinationPath { get; set; } = "";
+
     private static string SettingsDir => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
         "VXTrigger");
